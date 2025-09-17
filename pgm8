@@ -1,0 +1,21 @@
+capacity = 3
+process_list = [0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2]
+s = []
+pagefaults = 0
+
+for i in process_list:
+    if i not in s:
+        if len(s) == capacity:
+            s.remove(s[0])
+            s.append(i)
+        else:
+            s.append(i)
+        pagefaults += 1
+    else:
+        s.remove(i)
+        s.append(i)
+
+    print(s, end="")
+    print(" page faults count", pagefaults)
+
+print("total pagefaults", pagefaults)
