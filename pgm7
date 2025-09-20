@@ -1,0 +1,23 @@
+from queue import Queue
+
+def pageFaults(pages, n, capacity):
+    s = set()
+    indexes = Queue()
+    page_faults = 0
+    for i in range(n):
+        if pages[i] not in s:
+            if len(s) == capacity:
+                val = indexes.get()
+                s.remove(val)
+            s.add(pages[i])
+            indexes.put(pages[i])
+            page_faults += 1
+        print(s, end="")
+        print(" Page Fault count", page_faults)
+    return page_faults
+
+if __name__ == '__main__':
+    pages = [3, 2, 1, 0, 3, 2, 4, 3, 2, 1, 0, 4]
+    n = len(pages)
+    capacity = 3
+    print("Total page Fault count", pageFaults(pages, n, capacity))
