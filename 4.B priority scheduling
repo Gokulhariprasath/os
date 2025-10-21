@@ -1,0 +1,36 @@
+def findWaitingTime(process,n,wt):
+    wt[0]=0
+    for i in range(1,n):
+        wt[i]=process[i-1][1]+wt[i-1]
+
+def findTurnaroundTime(process,n,wt,tat):
+    for i in range(n):
+        tat[i]=process[i][1]+wt[i]
+
+def findAvgTime(process,n):
+    wt=[0]*n
+    tat=[0]*n
+    findWaitingTime(process,n,wt)
+    findTurnaroundTime(process,n,wt,tat)
+    print("\nProcess\tBurstTime\tWaitingTime\tTurnaroundTime")
+    total_wt=0
+    total_tat=0
+    for i in range(n):
+        total_wt+=wt[i]
+        total_tat+=tat[i]
+        print("",process[i][0],"\t\t",process[i][1],"\t\t",wt[i],"\t\t",tat[i])
+    print("Average Waiting Time = %.5f"%(total_wt/n))
+    print("Average Turnaround Time = %.5f"%(total_tat/n))
+
+def priorityScheduling(proc,n):
+    proc=sorted(proc,key=lambda x:x[2],reverse=True)
+    print("order in which process got executed:")
+    for i in proc:
+        print(i[0],end=" ")
+    findAvgTime(proc,n)
+
+if __name__=='__main__':
+    proc=[[1,10,1],[2,5,0],[3,8,1]]
+    n=3
+    print("Priority Scheduling Algorithm")
+    priorityScheduling(proc,n)
