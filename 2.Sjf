@@ -1,0 +1,42 @@
+n=int(input("entre the no of process:"))
+bt = [0]*(n+1)
+at = [0]*(n+1)
+abt = [0]*(n+1)
+for i in range(n):
+     abt[i] = int(input("enter the burst time of the process{}:".format(i+1)))
+     at[i] = int(input("Enter the arrival time of the process{}:".format(i+1)))
+     bt[i] = [abt[i], at[i], i]
+bt.pop(-1)
+print(abt)
+print(at)
+sumbt = 0
+i=0
+ll = []
+for i in range(0, sum(abt)):
+    l=[j for j in bt if j[1]<=i]
+    if len(l)==0:
+        continue
+    l.sort(key=lambda x:x[0])
+    bt[bt.index(l[0])][0]-=1
+    for k in bt:
+        if k[0]==0:
+            t=bt.pop(bt.index(k))
+            ll.append([k,i+1])
+ct=[0]*(n+1)
+tat=[0]*(n+1)
+wt=[0]*(n+1)
+for i in ll:
+    ct[i[0][2]] = i[1]
+for i in range(n):
+    tat[i] = ct[i] - at[i]
+    wt[i] = tat[i] - abt[i]
+ct.pop(-1)
+wt.pop(-1)
+tat.pop(-1)
+abt.pop(-1)
+at.pop(-1)
+print('pno\t bt \t at \t ct \t tat \t wt')
+for i in range(len(ct)):
+    print("{}\t{}\t{}\t{}\t{}\t{}".format(i+1,abt[i],at[i],ct[i],tat[i],wt[i]))
+print("average waiting time:",sum(wt)/len(wt))
+print("average turnaround time=",sum(tat)/len(tat))
